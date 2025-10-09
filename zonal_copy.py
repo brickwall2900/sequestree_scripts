@@ -16,11 +16,11 @@ def show_stuff():
     st.title("Tree Biomass and Carbon Stock of Quezon City, Philippines Per Zone - Geographically Weighted Regression Predictions")
 
     gpkg_files = {
-        "2020": "",
-        "2021": "",
-        "2022": "",
-        "2023": "",
-        "2024": ""
+        "2020": "https://github.com/sequestree008/sequestree_database/blob/main/2020_AGB_GWR_Real.gpkg",
+        "2021": "https://github.com/sequestree008/sequestree_database/blob/main/2021_AGB_GWR_Real.gpkg",
+        "2022": "https://github.com/sequestree008/sequestree_database/blob/main/2022_AGB_GWR_Real.gpkg",
+        "2023": "https://github.com/sequestree008/sequestree_database/blob/main/2023_AGB_GWR_Real.gpkg",
+        "2024": "https://github.com/sequestree008/sequestree_database/blob/main/2024_AGB_GWR_Real.gpkg"
     }
 
     selected_year = st.selectbox("Select Year", list(gpkg_files.keys()), index=len(gpkg_files)-1)
