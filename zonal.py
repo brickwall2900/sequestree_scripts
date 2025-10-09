@@ -16,12 +16,12 @@ def show_stuff():
     st.title("Tree Biomass and Carbon Stock of Quezon City, Philippines Per Zone - Random Forest Predictions")
 
     gpkg_files = {
-        "2020": "https://github.com/sequestree008/sequestree_database/blob/main/2020_AGB_RF_Real.gpkg",
-        "2021": "https://github.com/sequestree008/sequestree_database/blob/main/2021_AGB_RF_Real.gpkg",
-        "2022": "https://github.com/sequestree008/sequestree_database/blob/main/2022_AGB_RF_Real.gpkg",
-        "2023": "https://github.com/sequestree008/sequestree_database/blob/main/2023_AGB_RF_Real.gpkg",
-        "2024": "https://github.com/sequestree008/sequestree_database/blob/main/2024_AGB_RF_Real.gpkg"
-    }
+    "2020": "https://raw.githubusercontent.com/sequestree008/sequestree_database/main/2020_AGB_RF_Real.gpkg",
+    "2021": "https://raw.githubusercontent.com/sequestree008/sequestree_database/main/2021_AGB_RF_Real.gpkg",
+    "2022": "https://raw.githubusercontent.com/sequestree008/sequestree_database/main/2022_AGB_RF_Real.gpkg",
+    "2023": "https://raw.githubusercontent.com/sequestree008/sequestree_database/main/2023_AGB_RF_Real.gpkg",
+    "2024": "https://raw.githubusercontent.com/sequestree008/sequestree_database/main/2024_AGB_RF_Real.gpkg"
+}
 
     selected_year = st.selectbox("Select Year", list(gpkg_files.keys()), index=len(gpkg_files)-1)
 

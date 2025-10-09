@@ -14,11 +14,11 @@ def show_stuff():
     st.title("Tree Biomass and Carbon Stock of Quezon City, Philippines - Random Forest Predictions")
 
     biomass_rasters = {
-        "2020": "https://github.com/sequestree008/sequestree_database/blob/main/2020_AGB_RF.tif",
-        "2021": "https://github.com/sequestree008/sequestree_database/blob/main/2021_AGB_RF.tif",
-        "2022": "https://github.com/sequestree008/sequestree_database/blob/main/2022_AGB_RF.tif",
-        "2023": "https://github.com/sequestree008/sequestree_database/blob/main/2023_AGB_RF.tif",
-        "2024": "https://github.com/sequestree008/sequestree_database/blob/main/2024_AGB_RF.tif"
+        "2020": "https://raw.githubusercontent.com/sequestree008/sequestree_database/main/2020_AGB_RF.tif",
+        "2021": "https://raw.githubusercontent.com/sequestree008/sequestree_database/main/2021_AGB_RF.tif",
+        "2022": "https://raw.githubusercontent.com/sequestree008/sequestree_database/main/2022_AGB_RF.tif",
+        "2023": "https://raw.githubusercontent.com/sequestree008/sequestree_database/main/2023_AGB_RF.tif",
+        "2024": "https://raw.githubusercontent.com/sequestree008/sequestree_database/main/2024_AGB_RF.tif"
     }
 
     col1, col2 = st.columns(2)
