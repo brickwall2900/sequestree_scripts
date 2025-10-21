@@ -1,15 +1,10 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[2]:
+import streamlit as st
+import leafmap.foliumap as foliumap
+import folium
+from branca.colormap import linear
+from leafmap.foliumap import SplitControl
 
 def run(rasters, caption, range_min, range_max):
-    import streamlit as st
-    import leafmap.foliumap as foliumap
-    import folium
-    from branca.colormap import linear
-    from leafmap.foliumap import SplitControl
-
     st.set_page_config(layout="wide")
 
     biomass_rasters = rasters
@@ -28,7 +23,7 @@ def run(rasters, caption, range_min, range_max):
         left_args={'palette': 'Greens', 'vmin': range_min, 'vmax': range_max},
         right_args={'palette': 'Greens', 'vmin': range_min, 'vmax': range_max},
     )
-    colormap = linear.Greens_09.scale(0, 2000)
+    colormap = linear.Greens_09.scale(0, 2500)
     colormap.caption = caption
 
     m.add_colorbar(colors=colormap.colors, vmin=range_min, vmax=range_max, caption=caption)
