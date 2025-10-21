@@ -7,22 +7,25 @@ class DataResolver:
 
     def resolve_file(self, filename):
         return self._backend.resolve_file(filename)
-    
-try:
-    BASE_DIR = os.environ["_Sequestree_LocalDataResolverPath"]
-except:
-    raise ValueError("No _Sequestree_LocalDataResolverPath environment variable! Please set up _Sequestree_LocalDataResolverPath to a path in disk.")
 
 class LocalDataResolver:
+    def __init__(self):
+        try:
+            self._baseDir = os.environ["_Sequestree_LocalDataResolverPath"]
+        except:
+            raise ValueError("No _Sequestree_LocalDataResolverPath environment variable! Please set up _Sequestree_LocalDataResolverPath to a path in disk.")
+
     def resolve_file(self, filename):
-        file_path = BASE_DIR + "/" + filename
+        file_path = self._baseDir + "/" + filename
         return file_path
-    
-try:
-    REMOTE_URL = os.environ["_Sequestree_RemoteDataResolverURL"]
-except:
-    raise ValueError("No _Sequestree_RemoteDataResolverURL environment variable! Please set up _Sequestree_RemoteDataResolverURL to a URL.")
+
 class RemoteDataResolver:
+    def __init__(self):
+        try:
+            self._remoteUrl = os.environ["_Sequestree_RemoteDataResolverURL"]
+        except:
+            raise ValueError("No _Sequestree_RemoteDataResolverURL environment variable! Please set up _Sequestree_RemoteDataResolverURL to a URL.")
+
     def resolve_file(self, filename):
-        path = REMOTE_URL + filename
+        path = self._remoteUrl + filename
         return path
