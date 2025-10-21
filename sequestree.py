@@ -1,7 +1,7 @@
 import streamlit as st
 from data_resolver import DataResolver, LocalDataResolver
-import rasters_view
-import vectors_view
+import views.vectors_view as vectors_view
+import views.rasters_view as rasters_view
 from config import *
 
 st.title("Spatial Assessment and Backcasting of Tree Carbon Sequestration (CS) in Quezon City, Philippines")
