@@ -3,7 +3,7 @@
 
 # In[2]:
 
-def run(title, rasters, caption, range_min, range_max):
+def run(rasters, caption, range_min, range_max):
     import streamlit as st
     import leafmap.foliumap as foliumap
     import folium
@@ -11,7 +11,6 @@ def run(title, rasters, caption, range_min, range_max):
     from leafmap.foliumap import SplitControl
 
     st.set_page_config(layout="wide")
-    st.title(title)
 
     biomass_rasters = rasters
 
