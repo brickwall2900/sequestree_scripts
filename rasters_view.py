@@ -3,7 +3,7 @@
 
 # In[2]:
 
-def run(title, rasters):
+def run(title, rasters, caption, range_min, range_max):
     import streamlit as st
     import leafmap.foliumap as foliumap
     import folium
@@ -23,16 +23,18 @@ def run(title, rasters):
 
     m = foliumap.Map(center=[14.65, 121.05], zoom=12, basemap=None, tiles=None)
 
+    print(biomass_rasters[left_year])
+    print(biomass_rasters[right_year])
     m.split_map(
         left_layer=biomass_rasters[left_year],
         right_layer=biomass_rasters[right_year],
-        left_args={'palette': 'Greens', 'vmin': 0, 'vmax': 2500},
-        right_args={'palette': 'Greens', 'vmin': 0, 'vmax': 2500},
+        left_args={'palette': 'Greens', 'vmin': range_min, 'vmax': range_max},
+        right_args={'palette': 'Greens', 'vmin': range_min, 'vmax': range_max},
     )
     colormap = linear.Greens_09.scale(0, 2000)
-    colormap.caption = "Aboveground Biomass (kg)"
+    colormap.caption = caption
 
-    m.add_colorbar(colors=colormap.colors, vmin=0, vmax=2500, caption="Aboveground Biomass (kg)")
+    m.add_colorbar(colors=colormap.colors, vmin=range_min, vmax=range_max, caption=caption)
 
     m.to_streamlit(height=600)
 
