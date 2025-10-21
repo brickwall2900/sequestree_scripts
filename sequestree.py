@@ -21,8 +21,8 @@ option_selected = st.sidebar.selectbox("Choose:", list(OPTION_MAP.keys()), forma
 if option_selected == "RASTERS":
     # there are different sidebar options
     # above ground biomass, tree cabon seq potential
-    data_type = st.sidebar.selectbox("Data Type", list(AGB_DATA_TYPE_MAP.keys()), format_func=map_to_value(AGB_DATA_TYPE_MAP))
-    model = st.sidebar.selectbox("Model", list(MODEL_MAP.keys()), format_func=map_to_value(MODEL_MAP))
+    data_type = st.sidebar.selectbox("Data Type:", list(AGB_DATA_TYPE_MAP.keys()), format_func=map_to_value(AGB_DATA_TYPE_MAP), key="_sq_data_type")
+    model = st.sidebar.selectbox("Model:", list(MODEL_MAP.keys()), format_func=map_to_value(MODEL_MAP), key="_sq_model")
 
     folder_name = f"{option_selected}/{data_type}_{model}/"
 
@@ -34,9 +34,9 @@ if option_selected == "RASTERS":
 
     rasters_view.run(files, caption, min, max)
 elif option_selected == "VECTORS":
-    data_type = st.sidebar.selectbox("Data Type", list(ZONE_DATA_TYPE_MAP.keys()), format_func=map_to_value(ZONE_DATA_TYPE_MAP))
-    view_type = st.sidebar.selectbox("View Type", list(VIEW_TYPE_MAP.keys()), format_func=map_to_value(VIEW_TYPE_MAP))
-    model = st.sidebar.selectbox("Model", list(MODEL_MAP.keys()), format_func=map_to_value(MODEL_MAP))
+    data_type = st.sidebar.selectbox("Data Type:", list(ZONE_DATA_TYPE_MAP.keys()), format_func=map_to_value(ZONE_DATA_TYPE_MAP), key="_sq_data_type")
+    view_type = st.sidebar.selectbox("View Type:", list(VIEW_TYPE_MAP.keys()), format_func=map_to_value(VIEW_TYPE_MAP), key="_sq_view_type")
+    model = st.sidebar.selectbox("Model:", list(MODEL_MAP.keys()), format_func=map_to_value(MODEL_MAP), key="_sq_model")
 
     folder_name = f"{option_selected}/{data_type}_{model}_{view_type}/"
 
