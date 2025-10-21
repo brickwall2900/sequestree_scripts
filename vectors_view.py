@@ -3,7 +3,7 @@
 
 # In[2]:
 
-def run(title, files):
+def run(files, field_color_col, fields_alias_map: dict):
     import geopandas as gpd  
     import streamlit as st
     import folium
@@ -13,14 +13,13 @@ def run(title, files):
     from streamlit_folium import st_folium
 
     st.set_page_config(layout="wide")
-    st.title(title)
 
     gpkg_files = files
 
     selected_year = st.selectbox("Select Year", list(gpkg_files.keys()), index=len(gpkg_files)-1)
 
     gdf = gpd.read_file(gpkg_files[selected_year])
-    color_column = "Total AGB"
+    color_column = field_color_col
 
     classifier = mapclassify.Quantiles(gdf[color_column].dropna(), k=5)
     labels = ["Very Low", "Low", "Moderate", "High", "Very High"]
@@ -74,26 +73,8 @@ def run(title, files):
         gdf,
         style_function=style_function,
         tooltip=GeoJsonTooltip(
-            fields=[
-                "barangay",
-                "Total AGB",
-                "Total BGB",
-                "Total AGB C Stock",
-                "Total BGB C Stock",
-                "Total AGB CO2 Stock",
-                "Total BGB CO2 Stock",
-                "year"
-            ],
-            aliases=[
-                "Barangay",
-                "Aboveground Biomass (kg)",
-                "Belowground Biomass (kg)",
-                "AGB C Stock (kg)",
-                "BGB C Stock (kg)",
-                "AGB CO₂ Stock (kg)",
-                "BGB C Stock (kg)",
-                "Year"
-            ],
+            fields=list(fields_alias_map.keys()),
+            aliases=list(fields_alias_map.values()),
             localize=True,
             sticky=True
         ),
