@@ -1,38 +1,26 @@
-#!/usr/bin/env python
-# coding: utf-8
+import geopandas as gpd  
+import streamlit as st
+import folium
+import mapclassify
+from folium.features import GeoJsonTooltip
+from branca.colormap import StepColormap
+from streamlit_folium import st_folium
 
-# In[2]:
-
-def show_stuff():
-    import geopandas as gpd  
-    import streamlit as st
-    import folium
-    import mapclassify
-    from folium.features import GeoJsonTooltip
-    from branca.colormap import StepColormap
-    from streamlit_folium import st_folium
-
+def run(files, field_color_col, fields_alias_map: dict):
     st.set_page_config(layout="wide")
-    st.title("Tree Carbon Sequestration Potential of Quezon City, Philippines Per Zone - Random Forest Predictions")
 
-    gpkg_files = {
-    "2020": "https://raw.githubusercontent.com/sequestree008/sequestree_database/main/2020_POTENTIAL_RF_Real.gpkg",
-    "2021": "https://raw.githubusercontent.com/sequestree008/sequestree_database/main/2021_POTENTIAL_RF_Real.gpkg",
-    "2022": "https://raw.githubusercontent.com/sequestree008/sequestree_database/main/2022_POTENTIAL_RF_Real.gpkg",
-    "2023": "https://raw.githubusercontent.com/sequestree008/sequestree_database/main/2023_POTENTIAL_RF_Real.gpkg",
-    "2024": "https://raw.githubusercontent.com/sequestree008/sequestree_database/main/2024_POTENTIAL_RF_Real.gpkg"
-}
+    gpkg_files = files
 
     selected_year = st.selectbox("Select Year", list(gpkg_files.keys()), index=len(gpkg_files)-1)
 
     gdf = gpd.read_file(gpkg_files[selected_year])
-    color_column = "Average Potential Score"
+    color_column = field_color_col
 
     classifier = mapclassify.Quantiles(gdf[color_column].dropna(), k=5)
     labels = ["Very Low", "Low", "Moderate", "High", "Very High"]
     bin_edges = classifier.bins
 
-    colors = ["#3200AF", "#0014AF", "#0069AF", "#00AF8C", "#2E7602"]
+    colors = ["#AF0000", "#AF6000", "#AFA300", "#86AF00", "#027621"]
 
     colormap = StepColormap(
         colors=colors,
@@ -80,18 +68,8 @@ def show_stuff():
         gdf,
         style_function=style_function,
         tooltip=GeoJsonTooltip(
-            fields=[
-                "barangay",
-                "Average Potential Score",
-                "SD",
-                "year"
-            ],
-            aliases=[
-                "Barangay",
-                "Average Potential Score",
-                "Standard Deviation",
-                "Year"
-            ],
+            fields=list(fields_alias_map.keys()),
+            aliases=list(fields_alias_map.values()),
             localize=True,
             sticky=True
         ),

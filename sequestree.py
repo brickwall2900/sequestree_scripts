@@ -1,43 +1,49 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[2]:
-
 import streamlit as st
-import importlib
+from data_resolver import DataResolver, LocalDataResolver, RemoteDataResolver
+import views.vectors_view as vectors_view
+import views.rasters_view as rasters_view
+from config import *
 
 st.title("Spatial Assessment and Backcasting of Tree Carbon Sequestration (CS) in Quezon City, Philippines")
 
-choices = [
-    "Tree Biomass and Carbon Stock of Quezon City, Philippines - Random Forest Predictions",
-    "Tree Biomass and Carbon Stock of Quezon City, Philippines - Geographically Weighted Regression Predictions",
-    "Tree Carbon Sequestration Potential of Quezon City, Philippines - Random Forest Predictions",
-    "Tree Carbon Sequestration Potential of Quezon City Philippines - Geographically Weighted Regression Predictions",
-    "Tree Biomass and Carbon Stock of Quezon City, Philippines Per Zone - Random Forest Predictions",
-    "Tree Biomass and Carbon Stock of Quezon City, Philippines Per Zone - Geographically Weighted Regression Predictions",
-    "Tree Carbon Sequestration Potential of Quezon City, Philippines Per Zone - Random Forest Predictions",
-    "Tree Carbon Sequestration Potential of Quezon City, Philippines Per Zone - Geographically Weighted Regression Predictions"
-]
+# options
+data_resolver = DataResolver(RemoteDataResolver())
 
-choice = st.sidebar.selectbox("Select map to display:", choices)
+def map_to_value(dict):
+    def _do_stuff(input):
+        return dict[input]
+    return _do_stuff
 
-module_map = {
-    choices[0]: "visualization",
-    choices[1]: "visualization_copy",
-    choices[2]: "visualization_copy_copy",
-    choices[3]: "visualization_copy_copy_copy",
-    choices[4]: "zonal",
-    choices[5]: "zonal_copy",
-    choices[6]: "zonal_copy_copy",
-    choices[7]: "zonal_copy_copy_copy"
-}
+def build_year_dict(ext):
+    return {year: data_resolver.resolve_file(folder_name + year + ext) for year in YEARS}
 
-module_name = module_map.get(choice)
-if module_name:
-    thing = importlib.import_module(module_name)
-    if hasattr(thing, "show_stuff"):
-        thing.show_stuff()
-    else:
-        st.error("Not implemented!")
-else:
-    st.error("Selected option not found in module map. This should NOT happen!")
+option_selected = st.sidebar.selectbox("Choose:", list(OPTION_MAP.keys()), format_func=map_to_value(OPTION_MAP))
+if option_selected == "RASTERS":
+    # there are different sidebar options
+    # above ground biomass, tree cabon seq potential
+    data_type = st.sidebar.selectbox("Data Type:", list(AGB_DATA_TYPE_MAP.keys()), format_func=map_to_value(AGB_DATA_TYPE_MAP), key="_sq_data_type")
+    model = st.sidebar.selectbox("Model:", list(MODEL_MAP.keys()), format_func=map_to_value(MODEL_MAP), key="_sq_model")
+
+    folder_name = f"{option_selected}/{data_type}_{model}/"
+
+    ext = ".tif"
+    files = build_year_dict(ext)
+
+    min, max = AGB_DATA_TYPE_MIN_MAX[data_type]
+    caption = AGB_DATA_TYPE_CAPTION[data_type]
+
+    rasters_view.run(files, caption, min, max)
+elif option_selected == "VECTORS":
+    data_type = st.sidebar.selectbox("Data Type:", list(ZONE_DATA_TYPE_MAP.keys()), format_func=map_to_value(ZONE_DATA_TYPE_MAP), key="_sq_data_type")
+    view_type = st.sidebar.selectbox("View Type:", list(VIEW_TYPE_MAP.keys()), format_func=map_to_value(VIEW_TYPE_MAP), key="_sq_view_type")
+    model = st.sidebar.selectbox("Model:", list(MODEL_MAP.keys()), format_func=map_to_value(MODEL_MAP), key="_sq_model")
+
+    folder_name = f"{option_selected}/{data_type}_{model}_{view_type}/"
+
+    ext = ".gpkg"
+    files = build_year_dict(ext)
+
+    fields = VECTOR_FIELDS[view_type][data_type]
+    field_colored = VECTOR_FIELDS_COLORED[data_type]
+
+    vectors_view.run(files, field_colored, fields)
