@@ -1,5 +1,5 @@
 import streamlit as st
-from data_resolver import DataResolver, LocalDataResolver
+from data_resolver import DataResolver, LocalDataResolver, RemoteDataResolver
 import views.vectors_view as vectors_view
 import views.rasters_view as rasters_view
 from config import *
@@ -7,7 +7,7 @@ from config import *
 st.title("Spatial Assessment and Backcasting of Tree Carbon Sequestration (CS) in Quezon City, Philippines")
 
 # options
-data_resolver = DataResolver(LocalDataResolver())
+data_resolver = DataResolver(RemoteDataResolver())
 
 def map_to_value(dict):
     def _do_stuff(input):
