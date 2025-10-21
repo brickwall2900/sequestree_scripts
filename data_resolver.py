@@ -8,7 +8,10 @@ class DataResolver:
     def resolve_file(self, filename):
         return self._backend.resolve_file(filename)
     
-BASE_DIR = os.environ["_Sequestree_LocalDataResolverPath"]
+try:
+    BASE_DIR = os.environ["_Sequestree_LocalDataResolverPath"]
+except:
+    raise ValueError("No _Sequestree_LocalDataResolverPath environment variable! Please set up _Sequestree_LocalDataResolverPath to a path in disk.")
 
 class LocalDataResolver:
     def resolve_file(self, filename):
