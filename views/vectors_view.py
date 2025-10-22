@@ -6,7 +6,7 @@ from folium.features import GeoJsonTooltip
 from branca.colormap import StepColormap
 from streamlit_folium import st_folium
 
-def run(files, field_color_col, fields_alias_map: dict):
+def run(files, field_color_col, fields_alias_map: dict, legend):
     st.set_page_config(layout="wide")
 
     gpkg_files = files
@@ -76,6 +76,6 @@ def run(files, field_color_col, fields_alias_map: dict):
         name=f"Barangay Statistics {selected_year}"
     ).add_to(m)
 
-    add_custom_legend(m, colors, labels, f"Total AGB (kg) - {selected_year} (Quantile)")
+    add_custom_legend(m, colors, labels, legend + f" - {selected_year} (Quantile)")
 
     st_folium(m, width=1200, height=700)

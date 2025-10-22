@@ -79,3 +79,9 @@ VECTOR_FIELDS_COLORED = {
     "POTENTIAL": "mean",
     "AGB_DENSITY": "total_agb_density",
 }
+
+VECTOR_DATA_TYPE_CAPTION = {
+    "AGB": "Total AGB (kg)",
+    "AGB_DENSITY": "Total AGB Density (Mg/ha)",
+    "POTENTIAL": "Tree Carbon Sequestration Potential"
+}
