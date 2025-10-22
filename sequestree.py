@@ -45,5 +45,6 @@ elif option_selected == "VECTORS":
 
     fields = VECTOR_FIELDS[view_type][data_type]
     field_colored = VECTOR_FIELDS_COLORED[data_type]
+    legend = VECTOR_DATA_TYPE_CAPTION[data_type]
 
-    vectors_view.run(files, field_colored, fields)
+    vectors_view.run(files, field_colored, fields, legend)
