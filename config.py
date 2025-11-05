@@ -85,3 +85,5 @@ VECTOR_DATA_TYPE_CAPTION = {
     "AGB_DENSITY": "Total AGB Density (Mg/ha)",
     "POTENTIAL": "Tree Carbon Sequestration Potential"
 }
+
+TITILER_SERVER = "https://sequestree-titiler-endpoint.hf.space"

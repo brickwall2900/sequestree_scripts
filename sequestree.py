@@ -1,5 +1,5 @@
 import streamlit as st
-from data_resolver import DataResolver, LocalDataResolver, RemoteDataResolver
+from data_resolver import *
 import views.vectors_view as vectors_view
 import views.rasters_view as rasters_view
 from config import *
@@ -31,6 +31,8 @@ if option_selected == "RASTERS":
 
     min, max = AGB_DATA_TYPE_MIN_MAX[data_type]
     caption = AGB_DATA_TYPE_CAPTION[data_type]
+
+    print(f"The files are is {files}")
 
     rasters_view.run(files, caption, min, max)
 elif option_selected == "VECTORS":

@@ -3,6 +3,7 @@ import leafmap.foliumap as foliumap
 import folium
 from branca.colormap import linear
 from leafmap.foliumap import SplitControl
+import config
 
 def run(rasters, caption, range_min, range_max):
     st.set_page_config(layout="wide")
@@ -17,11 +18,22 @@ def run(rasters, caption, range_min, range_max):
 
     m = foliumap.Map(center=[14.65, 121.05], zoom=12, basemap=None, tiles=None)
 
+    print(f"The year selected is {left_year} || {right_year}")
+    print(f"Left year files: {biomass_rasters[left_year]}")
+    print(f"Right year files: {biomass_rasters[right_year]}")
+    print(f"TiTiler endpoint: {config.TITILER_SERVER}")
+
     m.split_map(
         left_layer=biomass_rasters[left_year],
         right_layer=biomass_rasters[right_year],
-        left_args={'palette': 'Greens', 'vmin': range_min, 'vmax': range_max},
-        right_args={'palette': 'Greens', 'vmin': range_min, 'vmax': range_max},
+        left_args={'palette': 'Greens', 
+                   'vmin': range_min, 
+                   'vmax': range_max,
+                   'titiler_endpoint': config.TITILER_SERVER},
+        right_args={'palette': 'Greens', 
+                    'vmin': range_min, 
+                    'vmax': range_max,
+                    'titiler_endpoint': config.TITILER_SERVER},
     )
     colormap = linear.Greens_09.scale(0, 2500)
     colormap.caption = caption
